@@ -35,5 +35,17 @@ class SidebarMenuMiddleware:
             else:
                 if has_permissions(item):
                     filtered_menu.append(item)
+        
+        # Função para marcar itens ativos
+        def mark_active(menu_items, current_path):
+            for item in menu_items:
+                if 'children' in item:
+                    has_active_child = mark_active(item['children'], current_path)
+                    item['active'] = has_active_child
+                else:
+                    # Para itens sem filhos, verifica se o path corresponde exatamente
+                    item['active'] = current_path == item['url']
+        
+        mark_active(filtered_menu, request.path_info)
         request.sidebar_menu = filtered_menu
         return self.get_response(request)

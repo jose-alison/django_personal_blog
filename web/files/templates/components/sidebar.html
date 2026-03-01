@@ -3,8 +3,8 @@
     <nav class="space-y-2">
         {% for item in sidebar_menu %}
             {% if item.children %}
-                <details class="group">
-                    <summary class="flex items-center cursor-pointer px-4 py-2 text-gray-300 hover:bg-gray-700 rounded">
+                <details class="group" {% if item.active %}open{% endif %}>
+                    <summary class="flex items-center cursor-pointer px-4 py-2 text-gray-300 hover:bg-gray-700 rounded {% if item.active %}bg-gray-700 text-white{% endif %}">
                         {% if item.icon %}
                             {% include 'components/icons.html' with icon=item.icon %}
                         {% endif %}
@@ -15,7 +15,7 @@
                     </summary>
                     <div class="ml-4 space-y-1">
                         {% for child in item.children %}
-                            <a href="{{ child.url }}" class="flex items-center px-4 py-2 text-gray-400 hover:bg-gray-700 rounded">
+                            <a href="{{ child.url }}" class="flex items-center px-4 py-2 text-gray-400 hover:bg-gray-700 rounded {% if child.active %}bg-gray-700 text-white{% endif %}">
                                 {% if child.icon %}
                                     {% include 'components/icons.html' with icon=child.icon %}
                                 {% endif %}
@@ -25,7 +25,7 @@
                     </div>
                 </details>
             {% else %}
-                <a href="{{ item.url }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded">
+                <a href="{{ item.url }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded {% if item.active %}bg-gray-700 text-white{% endif %}">
                     {% if item.icon %}
                         {% include 'components/icons.html' with icon=item.icon %}
                     {% endif %}
